@@ -69,6 +69,7 @@ public class DoC extends javax.swing.JFrame {
         openCheckBox = new javax.swing.JCheckBox();
         signComboBox = new javax.swing.JComboBox();
         signLabel = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("DoC maker");
@@ -116,6 +117,13 @@ public class DoC extends javax.swing.JFrame {
 
         signLabel.setText("signature:");
 
+        jButton2.setText("move pdf to Product Content");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -144,11 +152,15 @@ public class DoC extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(workLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addContainerGap(30, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -165,7 +177,9 @@ public class DoC extends javax.swing.JFrame {
                             .addComponent(signLabel))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(openCheckBox)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(workLabel))
         );
 
@@ -251,16 +265,39 @@ public class DoC extends javax.swing.JFrame {
 
     private void dateFieldPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dateFieldPropertyChange
 
-            Date date = dateField.getDate();
-            Date today = new Date();
-            date.setTime(date.getTime()+5000);
+        Date date = dateField.getDate();
+        Date today = new Date();
+        date.setTime(date.getTime() + 5000);
 
-            if (date.before(today) ) {
-                signComboBox.setSelectedIndex(1);
-            } else {
-                signComboBox.setSelectedIndex(0);
-            }
+        if (date.before(today)) {
+            signComboBox.setSelectedIndex(1);
+        } else {
+            signComboBox.setSelectedIndex(0);
+        }
     }//GEN-LAST:event_dateFieldPropertyChange
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        File productContent = new File("G:\\Product Content\\PRODUCTS\\");
+        File[] oldfiles = docFolder.listFiles(new FileFilter() {
+            @Override
+            public boolean accept(File pathname) {
+                return pathname.isFile() && pathname.getName().toString().endsWith(".pdf");
+            }
+        });
+
+        if (oldfiles.length > 0) {
+
+            for (int i = 0; i < oldfiles.length; i += 1) {
+                String sap = oldfiles[i].getName().substring(4, 11);
+                File newFile = new File(productContent + "\\" + sap + "\\" + oldfiles[i].getName());
+                System.out.println(oldfiles[i] + " - " + sap + " - " + newFile);
+                oldfiles[i].renameTo(newFile);
+            }
+            JOptionPane.showMessageDialog(null, "All DoCs have been moved into proper Product Content folders", "Done", JOptionPane.PLAIN_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "There is no DoC in pdf file", "No pdf DoC", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     public static void main(String args[]) {
 
@@ -273,6 +310,7 @@ public class DoC extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser dateField;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JCheckBox openCheckBox;
