@@ -68,7 +68,6 @@ public class DoC extends javax.swing.JFrame {
         workLabel = new javax.swing.JLabel();
         signComboBox = new javax.swing.JComboBox();
         signLabel = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -96,6 +95,7 @@ public class DoC extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setBackground(new java.awt.Color(153, 255, 102));
         jButton1.setText("Make DoC");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -109,19 +109,19 @@ public class DoC extends javax.swing.JFrame {
         });
 
         workLabel.setForeground(new java.awt.Color(0, 51, 255));
+        workLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 
         signComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Jose", "Ad" }));
 
         signLabel.setText("signature:");
 
-        jButton2.setText("move pdf to Product Content");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+        jButton3.setText("create PDF from Excel and move into Product Content");
+        jButton3.setPreferredSize(new java.awt.Dimension(235, 15));
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jButton3MousePressed(evt);
             }
         });
-
-        jButton3.setText("create pdf's");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -134,7 +134,7 @@ public class DoC extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(workLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(workLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -142,10 +142,7 @@ public class DoC extends javax.swing.JFrame {
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2))
+                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(sapField, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
@@ -165,7 +162,7 @@ public class DoC extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(30, Short.MAX_VALUE)
+                .addContainerGap(38, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -180,11 +177,10 @@ public class DoC extends javax.swing.JFrame {
                         .addComponent(signComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(signLabel)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(workLabel))
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(workLabel)
+                .addGap(5, 5, 5))
         );
 
         pack();
@@ -238,27 +234,10 @@ public class DoC extends javax.swing.JFrame {
                     } catch (IOException e) {
                     }
                 } else if (n == JOptionPane.NO_OPTION) {
-                    try {
-                        createDocExcel(Date, sapNo);
-                    } catch (IOException ex) {
-                        Logger.getLogger(DoC.class.getName()).log(Level.SEVERE, null, ex);
-                    } finally {
-                        Utils.closeDB(rs, st, con);
-                    }
+                    createDocFormat(Date, sapNo);
                 }
             } else {
-                Object[] optionsDoC = {"Create a DoC in PDF and save in Product Content", "Create and open a DoC in Excel"};
-                int a = JOptionPane.showOptionDialog(null, "DoC file already exist.", "DoC",
-                        JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, optionsDoC, optionsDoC[0]);
-                if (a == JOptionPane.YES_OPTION) {
-                    try {
-                        createDocExcel(Date, sapNo);
-                    } catch (IOException ex) {
-                        Logger.getLogger(DoC.class.getName()).log(Level.SEVERE, null, ex);
-                    } finally {
-                        Utils.closeDB(rs, st, con);
-                    }
-                }
+                createDocFormat(Date, sapNo);
             }
         } else {
             JOptionPane.showMessageDialog(null, "Enter SAP number !!!", "No SAP", JOptionPane.ERROR_MESSAGE);
@@ -285,32 +264,14 @@ public class DoC extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_dateFieldPropertyChange
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        File productContent = new File("G:\\Product Content\\PRODUCTS\\");
-        File[] oldfiles = docFolder.listFiles(new FileFilter() {
-            @Override
-            public boolean accept(File pathname) {
-                return pathname.isFile() && pathname.getName().toString().endsWith(".pdf");
-            }
-        });
-
-        if (oldfiles.length > 0) {
-
-            for (int i = 0; i < oldfiles.length; i += 1) {
-                String sap = oldfiles[i].getName().substring(4, 11);
-                File newFile = new File(productContent + "\\" + sap + "\\" + oldfiles[i].getName());
-                System.out.println(oldfiles[i] + " - " + sap + " - " + newFile);
-                oldfiles[i].renameTo(newFile);
-            }
-            JOptionPane.showMessageDialog(null, "All DoCs have been moved into proper Product Content folders", "Done", JOptionPane.PLAIN_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(null, "There is no DoC in pdf file", "No pdf DoC", JOptionPane.ERROR_MESSAGE);
-        }
-    }//GEN-LAST:event_jButton2ActionPerformed
-
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         createPDF();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MousePressed
+        workLabel.setText("working...");
+        workLabel.setForeground(Color.red);
+    }//GEN-LAST:event_jButton3MousePressed
 
     public static void main(String args[]) {
 
@@ -323,7 +284,6 @@ public class DoC extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser dateField;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -332,6 +292,35 @@ public class DoC extends javax.swing.JFrame {
     private javax.swing.JLabel signLabel;
     private javax.swing.JLabel workLabel;
     // End of variables declaration//GEN-END:variables
+
+    private void createDocFormat(Date Date, String sapNo) {
+        Object[] optionsDoC = {"Create a DoC in PDF and save in Product Content", "Create and open a DoC in Excel"};
+        int a = JOptionPane.showOptionDialog(null, "Create a DoC in...", "DoC",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, optionsDoC, optionsDoC[0]);
+        if (a == JOptionPane.YES_OPTION) {
+            try {
+                createDocExcel(Date, sapNo, 0);
+                workLabel.setText("making pdf...");
+                workLabel.setForeground(Color.red);
+            } catch (IOException ex) {
+                Logger.getLogger(DoC.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                Utils.closeDB(rs, st, con);
+                createPDF();
+                movePDF();
+                workLabel.setText("done");
+                workLabel.setForeground(Color.blue);
+            }
+        } else if (a == JOptionPane.NO_OPTION) {
+            try {
+                createDocExcel(Date, sapNo, 1);
+            } catch (IOException ex) {
+                Logger.getLogger(DoC.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                Utils.closeDB(rs, st, con);
+            }
+        }
+    }
 
     public ArrayList<String> isSet(String sapNo) {
         ArrayList compList = new ArrayList<String>();
@@ -398,7 +387,7 @@ public class DoC extends javax.swing.JFrame {
         return compList;
     }
 
-    private void createDocExcel(Date Date, String sapNo) throws FileNotFoundException, IOException {
+    private void createDocExcel(Date Date, String sapNo, int a) throws FileNotFoundException, IOException {
         workLabel.setText("working...");
         String sapWithoutDocs = sapNo.replace(".", "");
         DateFormat DateSapFormat = new SimpleDateFormat("yyyyMMdd");
@@ -434,12 +423,12 @@ public class DoC extends javax.swing.JFrame {
 
         workLabel.setText("done");
         workLabel.setForeground(Color.blue);
-
-        if (Desktop.isDesktopSupported()) {
-            desktop = Desktop.getDesktop();
+        if (a == 1) {
+            if (Desktop.isDesktopSupported()) {
+                desktop = Desktop.getDesktop();
+            }
+            desktop.open(excelname);
         }
-        desktop.open(excelname);
-
     }
 
     private void createDoC(Date Date, String sapNo, int count, XSSFWorkbook wb) {
@@ -1511,9 +1500,41 @@ public class DoC extends javax.swing.JFrame {
             desktop = Desktop.getDesktop();
         }
         try {
-            desktop.open(new File("H:\\DoCs_temporary\\MakePDF\\MakePDF.xlsm"));
+            desktop.open(new File(docFolder + "\\MakePDF\\MakePDF.xlsm"));
         } catch (IOException ex) {
             Logger.getLogger(DoC.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            movePDF();
+            workLabel.setText("done");
+            workLabel.setForeground(Color.blue);
+
+        }
+    }
+
+    public boolean movePDF() {
+        File productContent = new File("G:\\Product Content\\PRODUCTS\\");
+        File[] oldfiles = docFolder.listFiles(new FileFilter() {
+            @Override
+            public boolean accept(File pathname) {
+                return pathname.isFile() && pathname.getName().toString().endsWith(".pdf");
+            }
+        });
+
+        if (oldfiles.length > 0) {
+
+            for (int i = 0; i < oldfiles.length; i += 1) {
+                String sap = oldfiles[i].getName().substring(4, 11);
+                File newFile = new File(productContent + "\\" + sap + "\\" + oldfiles[i].getName());
+                String excelName = (oldfiles[i].getName().substring(0, oldfiles[i].getName().length() - 3)) + "xlsx";
+                File excelFile = new File(docFolder + "\\" + excelName);
+                System.out.println(excelName);
+
+                oldfiles[i].renameTo(newFile);
+                excelFile.delete();
+            }
+            return true;
+        } else {
+            return false;
         }
     }
 }
