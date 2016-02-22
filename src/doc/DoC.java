@@ -247,12 +247,17 @@ public class DoC extends javax.swing.JFrame {
                     }
                 }
             } else {
-                try {
-                    createDocExcel(Date, sapNo);
-                } catch (IOException ex) {
-                    Logger.getLogger(DoC.class.getName()).log(Level.SEVERE, null, ex);
-                } finally {
-                    Utils.closeDB(rs, st, con);
+                Object[] optionsDoC = {"Create a DoC in PDF and save in Product Content", "Create and open a DoC in Excel"};
+                int a = JOptionPane.showOptionDialog(null, "DoC file already exist.", "DoC",
+                        JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, optionsDoC, optionsDoC[0]);
+                if (a == JOptionPane.YES_OPTION) {
+                    try {
+                        createDocExcel(Date, sapNo);
+                    } catch (IOException ex) {
+                        Logger.getLogger(DoC.class.getName()).log(Level.SEVERE, null, ex);
+                    } finally {
+                        Utils.closeDB(rs, st, con);
+                    }
                 }
             }
         } else {
@@ -304,14 +309,7 @@ public class DoC extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        if (Desktop.isDesktopSupported()) {
-            desktop = Desktop.getDesktop();
-        }
-        try {
-            desktop.open(new File("H:\\DoCs_temporary\\111\\MakePDF.xlsm"));
-        } catch (IOException ex) {
-            Logger.getLogger(DoC.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        createPDF();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     public static void main(String args[]) {
@@ -1508,4 +1506,14 @@ public class DoC extends javax.swing.JFrame {
         }
     }
 
+    private void createPDF() {
+        if (Desktop.isDesktopSupported()) {
+            desktop = Desktop.getDesktop();
+        }
+        try {
+            desktop.open(new File("H:\\DoCs_temporary\\MakePDF\\MakePDF.xlsm"));
+        } catch (IOException ex) {
+            Logger.getLogger(DoC.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
