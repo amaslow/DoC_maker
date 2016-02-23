@@ -505,7 +505,7 @@ public class DoC extends javax.swing.JFrame {
             while (rs.next()) {
                 sap = rs.getString(1);
                 item = rs.getString(2);
-                brand = rs.getString(3);
+                brand = rs.getString(3).replace("PL ", "");
                 descr_en = rs.getString(4);
                 descr_fr = rs.getString(5);
                 descr_de = rs.getString(6);
@@ -664,7 +664,7 @@ public class DoC extends javax.swing.JFrame {
                     cell.setCellValue(trademark[i]);
                     cell.setCellStyle(normal);
                     cell = row.createCell(2);
-                    cell.setCellValue(brand.replace("PL ", ""));
+                    cell.setCellValue(brand);
                     cell.setCellStyle(normalHI);
 
                     FileInputStream brand_logo = new FileInputStream(images + "\\BRANDS\\" + brand + ".png");
@@ -1308,7 +1308,7 @@ public class DoC extends javax.swing.JFrame {
             while (rs.next()) {
                 sap = rs.getString(1);
                 item = rs.getString(2);
-                brand = rs.getString(3);
+                brand = rs.getString(3).replace("PL ", "");
                 descr_en = rs.getString(4);
                 descr_fr = rs.getString(5);
                 descr_de = rs.getString(6);
@@ -1407,7 +1407,7 @@ public class DoC extends javax.swing.JFrame {
                 cell.setCellValue(trademark[0]);
                 cell.setCellStyle(normal);
                 cell = row.createCell(2);
-                cell.setCellValue(brand.replace("PL ", ""));
+                cell.setCellValue(brand);
                 cell.setCellStyle(normalHI);
 
                 FileInputStream brand_logo = new FileInputStream(images + "\\BRANDS\\" + brand + ".png");
