@@ -1500,7 +1500,7 @@ public class DoC extends javax.swing.JFrame {
             desktop = Desktop.getDesktop();
         }
         try {
-            desktop.open(new File(docFolder + "\\MakePDF\\MakePDF.xlsm"));
+            desktop.open(new File("G:\\QC\\Database\\DoC Maker\\MakePDF.xlsm"));
         } catch (IOException ex) {
             Logger.getLogger(DoC.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
