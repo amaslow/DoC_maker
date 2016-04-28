@@ -10,7 +10,7 @@ public class Utils {
 
     private static Connection con;
     private static String Driver = "com.mysql.jdbc.Driver";
-    private static String url = "jdbc:mysql://172.17.18.89:3306/ELRO";
+    private static String url = "jdbc:mysql://172.16.54.90:3306/ELRO";
     private static String username = "root";
     private static String password = "IP1212IP";
 

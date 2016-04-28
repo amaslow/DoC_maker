@@ -54,7 +54,7 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="signComboBox" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="66" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="31" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -151,10 +151,12 @@
     </Component>
     <Component class="javax.swing.JComboBox" name="signComboBox">
       <Properties>
+        <Property name="maximumRowCount" type="int" value="3"/>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="2">
-            <StringItem index="0" value="Jose"/>
-            <StringItem index="1" value="Ad"/>
+          <StringArray count="3">
+            <StringItem index="0" value="Jose Tilburg"/>
+            <StringItem index="1" value="Jose Gilze"/>
+            <StringItem index="2" value="Ad"/>
           </StringArray>
         </Property>
       </Properties>

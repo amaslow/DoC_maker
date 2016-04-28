@@ -111,7 +111,8 @@ public class DoC extends javax.swing.JFrame {
         workLabel.setForeground(new java.awt.Color(0, 51, 255));
         workLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 
-        signComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Jose", "Ad" }));
+        signComboBox.setMaximumRowCount(3);
+        signComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Jose Tilburg", "Jose Gilze", "Ad" }));
 
         signLabel.setText("signature:");
 
@@ -156,7 +157,7 @@ public class DoC extends javax.swing.JFrame {
                                 .addComponent(signLabel)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(signComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 66, Short.MAX_VALUE)))
+                        .addGap(0, 31, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -258,7 +259,7 @@ public class DoC extends javax.swing.JFrame {
         date.setTime(date.getTime() + 5000);
 
         if (date.before(today)) {
-            signComboBox.setSelectedIndex(1);
+            signComboBox.setSelectedIndex(2);
         } else {
             signComboBox.setSelectedIndex(0);
         }
@@ -574,7 +575,13 @@ public class DoC extends javax.swing.JFrame {
                     "Angabe der einschlägigen harmonisierten Normen, die zugrunde gelegt wurden, oder Angabe der anderen technischen Spezifikationen, in Bezug auf die die Konformität erklärt wird:",
                     "Références des normes harmonisées pertinentes appliquées ou des autres spécifications techniques par rapport auxquelles la conformité est déclarée:"};
                 String[] auth_repr = {"Authorized representative:", "Bevollmächtigten Vertreter:", "Représentant autorisé:"};
-                String[] place = {"Place and date of issue: Gilze, ", "Ort und Datum der Ausstellung: Gilze, ", "Lieu et date d’établissement: Gilze, "};
+                String city = "";
+                if (signComboBox.getSelectedIndex() == 1 || signComboBox.getSelectedIndex() == 2) {
+                    city = "Gilze";
+                } else {
+                    city = "Tilburg";
+                }
+                String[] place = {"Place and date of issue: " + city + ", ", "Ort und Datum der Ausstellung: " + city + ", ", "Lieu et date d’établissement: " + city + ", "};
 
                 for (int i = 0; i < 3; i += 1) {
                     int rownr = 0;
@@ -616,7 +623,13 @@ public class DoC extends javax.swing.JFrame {
                     cell.setCellValue(address[i]);
                     cell.setCellStyle(normal);
                     cell = row.createCell(2);
-                    cell.setCellValue("Broekakkerweg 15, 5126 BD Gilze");
+                    String adres = "";
+                    if (signComboBox.getSelectedIndex() == 1 || signComboBox.getSelectedIndex() == 2) {
+                        adres = "Broekakkerweg 15, 5126 BD Gilze";
+                    } else {
+                        adres = "Jules Verneweg 87,5015 BH Tilburg";
+                    }
+                    cell.setCellValue(adres);
                     cell.setCellStyle(normal);
 
                     rownr += 1;
@@ -1123,21 +1136,21 @@ public class DoC extends javax.swing.JFrame {
                     cell.setCellStyle(normal);
                     cell = row.createCell(3);
                     String nameManager = null;
+                    String stamp = null;
                     if (signComboBox.getSelectedIndex() == 0) {
                         nameManager = "José Maas, Quality Manager";
+                        stamp = "signJose_new.png";
+                    } else if (signComboBox.getSelectedIndex() == 1) {
+                        nameManager = "José Maas, Quality Manager";
+                        stamp = "signJose.png";
                     } else {
                         nameManager = "Ad Netten, Quality Manager";
+                        stamp = "signAd.png";
                     }
                     cell.setCellValue(nameManager);
                     cell.setCellStyle(normal);
 
                     rownr += 1;
-                    String stamp = null;
-                    if (signComboBox.getSelectedIndex() == 0) {
-                        stamp = "signJose.png";
-                    } else {
-                        stamp = "signAd.png";
-                    }
                     FileInputStream signManager = new FileInputStream(images + "\\" + stamp);
 
                     byte[] signManager_bytes = IOUtils.toByteArray(signManager);
@@ -1324,7 +1337,13 @@ public class DoC extends javax.swing.JFrame {
                 String[] name = {"Pruduct name:", "Artikel-Nr.:", "Référence produit:"};
                 String[] trademark = {"Trademark:", "Markenname:", "Marque déposée:"};
                 String[] auth_repr = {"Authorized representative:", "Bevollmächtigten Vertreter:", "Représentant autorisé:"};
-                String[] place = {"Place and date of issue: Gilze, ", "Ort und Datum der Ausstellung: Gilze, ", "Lieu et date d’établissement: Gilze, "};
+                String city = "";
+                if (signComboBox.getSelectedIndex() == 1 || signComboBox.getSelectedIndex() == 2) {
+                    city = "Gilze";
+                } else {
+                    city = "Tilburg";
+                }
+                String[] place = {"Place and date of issue: " + city + ", ", "Ort und Datum der Ausstellung: " + city + ", ", "Lieu et date d’établissement: " + city + ", "};
 
                 int rownr = 0;
                 XSSFRow row = wb.getSheetAt(0).createRow(rownr);//0
@@ -1365,7 +1384,13 @@ public class DoC extends javax.swing.JFrame {
                 cell.setCellValue(address[0]);
                 cell.setCellStyle(normal);
                 cell = row.createCell(2);
-                cell.setCellValue("Broekakkerweg 15, 5126 BD Gilze");
+                String adres = "";
+                if (signComboBox.getSelectedIndex() == 1 || signComboBox.getSelectedIndex() == 2) {
+                    adres = "Broekakkerweg 15, 5126 BD Gilze";
+                } else {
+                    adres = "Jules Verneweg 87,5015 BH Tilburg";
+                }
+                cell.setCellValue(adres);
                 cell.setCellStyle(normal);
 
                 rownr += 1;
